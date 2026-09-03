@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>COLORA Email Signature Generator</title>
+  <meta name="description" content="Tạo chữ ký email chuẩn thương hiệu COLORA cho nhân viên." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ivory:#F4EDE1;
+      --navy:#002451;
+      --gold:#B08A5B;
+      --burgundy:#8E2F2A;
+      --green:#0F6857;
+      --sand:#DBC9B4;
+      --brown:#4A2E23;
+      --white:#FFFFFF;
+      --muted:#4A2E23;
+      --shadow:0 18px 50px rgba(0,36,81,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 5% 5%, rgba(176,138,91,.13), transparent 25rem),
+        linear-gradient(180deg,#fff 0%,#fbf8f3 100%);
+      color:var(--navy);
+      font-family:"Open Sans","Helvetica Neue",Arial,sans-serif;
+      min-height:100vh;
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:36px 22px 60px}
+    .top{
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+      margin-bottom:28px;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+
+    .wordmark{
+      font-family:Didot,"Bodoni 72","Times New Roman",serif;
+      font-size:29px;letter-spacing:.08em;line-height:1;color:var(--navy);
+    }
+    .badge{
+      color:var(--green);background:#fff;border:1px solid rgba(15,104,87,.20);
+      border-radius:999px;padding:8px 12px;font-size:12px;font-weight:700;
+    }
+    h1{
+      font-family:Didot,"Bodoni 72","Times New Roman",serif;
+      font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1.03;letter-spacing:-.02em;
+      margin:20px 0 10px;max-width:840px;
+    }
+    .lead{max-width:760px;color:#5f544f;font-size:15px;line-height:1.7;margin:0 0 30px}
+    .grid{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(430px,1.1fr);gap:24px;align-items:start}
+    .card{
+      background:rgba(255,255,255,.95);border:1px solid rgba(219,201,180,.65);
+      border-radius:var(--radius);box-shadow:var(--shadow);
+    }
+    .form-card{padding:24px}
+    .preview-card{padding:24px;position:sticky;top:20px}
+    .section-title{
+      font-family:Didot,"Bodoni 72","Times New Roman",serif;font-size:24px;font-weight:600;margin:0 0 18px;
+    }
+    .field{margin-bottom:14px}
+    label{display:block;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--brown);margin-bottom:6px}
+    input,select,textarea{
+      width:100%;border:1px solid #e4d8ca;background:#fff;border-radius:12px;padding:11px 12px;
+      font:inherit;font-size:14px;color:var(--navy);outline:none;transition:.18s;
+    }
+    input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,138,91,.12)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .switch-row{
+      display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0;
+      border-top:1px solid #eee5db;
+    }
+    .switch-row strong{font-size:13px;color:var(--navy)}
+    .switch-row span{display:block;font-size:11px;color:#7b6d64;margin-top:3px}
+    .switch{position:relative;width:44px;height:24px;flex:none}
+    .switch input{opacity:0;width:0;height:0}
+    .slider{
+      position:absolute;inset:0;background:#d7cec4;border-radius:99px;cursor:pointer;transition:.2s;
+    }
+    .slider:before{
+      content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s;
+      box-shadow:0 1px 5px rgba(0,0,0,.18);
+    }
+    .switch input:checked + .slider{background:var(--navy)}
+    .switch input:checked + .slider:before{transform:translateX(20px)}
+    .preview-shell{
+      background:var(--ivory);border-radius:18px;padding:18px;border:1px solid #e9dece;
+    }
+    .email-canvas{
+      background:white;border-radius:12px;min-height:410px;padding:28px;box-shadow:0 8px 25px rgba(74,46,35,.08);
+      overflow:auto;
+    }
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    button{
+      border:0;border-radius:12px;padding:12px 14px;font:inherit;font-weight:700;cursor:pointer;transition:.18s;
+    }
+    button.primary{background:var(--navy);color:white}
+    button.primary:hover{transform:translateY(-1px);box-shadow:0 9px 18px rgba(0,36,81,.18)}
+    button.secondary{background:#fff;color:var(--navy);border:1px solid #d7c8b6}
+    button.secondary:hover{background:var(--ivory)}
+    .status{
+      min-height:22px;margin-top:10px;font-size:12px;color:var(--green);font-weight:700;text-align:center;
+    }
+    .help{
+      margin-top:16px;background:#fff;border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 10px 10px 0;
+      font-size:12px;line-height:1.65;color:#66584f;
+    }
+    .footer{
+      margin-top:28px;color:#84766c;font-size:11px;text-align:center;
+    }
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--burgundy)}
+    @media(max-width:900px){
+      .grid{grid-template-columns:1fr}
+      .preview-card{position:static}
+    }
+    @media(max-width:560px){
+      .two,.actions{grid-template-columns:1fr}
+      .top{align-items:flex-start}
+      .badge{display:none}
+      .email-canvas{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="wordmark">COLORA</div>
+      </div>
+      <div class="badge">Internal Brand Tool</div>
+    </header>
+
+    <h1>COLORA Email Signature Generator</h1>
+    <p class="lead">
+      Nhân viên chỉ cần điền thông tin cá nhân, kiểm tra bản xem trước và bấm
+      <strong>Copy Signature</strong>. Chữ ký được tạo bằng HTML email-safe với màu và typography theo brand identity COLORA.
+    </p>
+
+    <section class="grid">
+      <div class="card form-card">
+        <h2 class="section-title">Thông tin nhân viên</h2>
+
+        <div class="field">
+          <label for="name">HỌ VÀ TÊN</label>
+          <input id="name" value="Nguyen Dang Quoc Dat" autocomplete="name">
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="title">CHỨC DANH</label>
+            <input id="title" value="Founder">
+          </div>
+          <div class="field">
+            <label for="company">CÔNG TY</label>
+            <input id="company" value="COLORA JEWELRY CO., LTD" readonly>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="phone">ĐIỆN THOẠI</label>
+          <input id="phone" value="+84 (0) 927 542 288" autocomplete="tel">
+        </div>
+
+        <div class="field">
+          <label for="email">EMAIL CÔNG TY</label>
+          <input id="email" type="email" value="dat.ndq@colora.vn" autocomplete="email">
+        </div>
+
+        <div class="field">
+          <label for="website">WEBSITE</label>
+          <input id="website" value="colora.vn">
+        </div>
+
+        <div class="field">
+          <label for="greeting">LỜI CHÀO</label>
+          <input id="greeting" value="Best Regards,">
+        </div>
+
+        <div class="switch-row">
+          <div>
+            <strong>Environmental note</strong>
+            <span>Hiển thị lời nhắc hạn chế in email.</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="eco" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <div>
+            <strong>Confidentiality disclaimer</strong>
+            <span>Hiển thị disclaimer ở cuối chữ ký.</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="disclaimer" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="help">
+          <strong>Quy chuẩn COLORA:</strong> Heading dùng Didot; text dùng Open Sans.
+          Palette: <code>#F4EDE1</code>, <code>#002451</code>, <code>#B08A5B</code>,
+          <code>#8E2F2A</code>, <code>#0F6857</code>, <code>#DBC9B4</code>, <code>#4A2E23</code>.
+          Trong email có font fallback kỹ thuật để tránh lỗi hiển thị trên thiết bị không có Didot/Open Sans.
+        </div>
+      </div>
+
+      <div class="card preview-card">
+        <h2 class="section-title">Preview</h2>
+        <div class="preview-shell">
+          <div class="email-canvas" id="preview"></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="copyRich">Copy Signature</button>
+          <button class="secondary" id="copyHtml">Copy HTML</button>
+          <button class="secondary" id="downloadHtml">Download HTML</button>
+          <button class="secondary" id="reset">Reset</button>
+        </div>
+        <div class="status" id="status"></div>
+
+        <div class="help">
+          <strong>Apple Mail:</strong> Mail → Settings → Signatures → chọn email COLORA → dấu “+” → paste.<br>
+          <strong>Outlook:</strong> Settings → Signatures → New signature → paste.<br>
+          Nên dùng nút <strong>Copy Signature</strong> thay vì copy mã HTML.
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">COLORA · Email signature standard</div>
+  </main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const defaults = {
+  name: "Nguyen Dang Quoc Dat",
+  title: "Founder",
+  phone: "+84 (0) 927 542 288",
+  email: "dat.ndq@colora.vn",
+  website: "colora.vn",
+  greeting: "Best Regards,",
+  eco: true,
+  disclaimer: true
+};
+
+function escapeHtml(s=""){
+  return s.replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[m]);
+}
+
+function cleanWebsite(v){
+  return v.replace(/^https?:\/\//i,"").replace(/\/+$/,"");
+}
+function phoneHref(v){
+  return "tel:" + v.replace(/[^\d+]/g,"");
+}
+
+function signatureHTML(){
+  const name = escapeHtml($("name").value.trim());
+  const title = escapeHtml($("title").value.trim());
+  const phone = escapeHtml($("phone").value.trim());
+  const email = escapeHtml($("email").value.trim());
+  const website = escapeHtml(cleanWebsite($("website").value.trim()));
+  const greeting = escapeHtml($("greeting").value.trim());
+
+  const eco = $("eco").checked ? `
+    <tr>
+      <td style="padding:11px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11px;line-height:1.5;font-weight:600;color:#0F6857;">
+        Please consider your environmental responsibilities before printing emails and documents.
+      </td>
+    </tr>` : "";
+
+  const disclaimer = $("disclaimer").checked ? `
+    <tr>
+      <td style="padding:10px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:10.5px;line-height:1.55;color:#4A2E23;">
+        <span style="font-weight:700;color:#8E2F2A;">(!) Disclaimer:</span>
+        <span style="font-style:italic;">
+          This email and any attachments may contain confidential or privileged information and are intended solely for the named recipient(s).
+          If you have received this email in error, please notify the sender and delete it. You should not copy, distribute, disclose, or act on
+          the contents of this email without authorization.
+        </span>
+      </td>
+    </tr>` : "";
+
+  return `
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"
+ style="border-collapse:collapse;max-width:680px;width:100%;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;color:#002451;">
+  <tr>
+    <td style="padding:0 0 10px 0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:18px;line-height:1.3;font-style:italic;color:#002451;">
+      ${greeting}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 0 14px 0;">
+      <div style="width:54px;height:1px;background:#B08A5B;line-height:1px;font-size:1px;">&nbsp;</div>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:22px;line-height:1.18;font-weight:600;letter-spacing:.1px;color:#002451;">
+      ${name}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:3px 0 11px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:1.45;color:#4A2E23;">
+      ${title} <span style="color:#DBC9B4;">|</span> COLORA JEWELRY CO., LTD
+    </td>
+  </tr>
+
+  <tr>
+    <td style="padding:0 0 2px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.55;color:#4A2E23;">
+      <span style="font-weight:700;color:#8E2F2A;">T</span>
+      <span style="color:#DBC9B4;">&nbsp;·&nbsp;</span>
+      <a href="${phoneHref(phone)}" style="color:#002451;text-decoration:none;">${phone}</a>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 0 2px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.55;color:#4A2E23;">
+      <span style="font-weight:700;color:#8E2F2A;">E</span>
+      <span style="color:#DBC9B4;">&nbsp;·&nbsp;</span>
+      <a href="mailto:${email}" style="color:#002451;text-decoration:none;">${email}</a>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.55;color:#4A2E23;">
+      <span style="font-weight:700;color:#8E2F2A;">W</span>
+      <span style="color:#DBC9B4;">&nbsp;·&nbsp;</span>
+      <a href="https://${website}" style="color:#002451;text-decoration:none;">${website}</a>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:16px 0 0 0;">
+      <div style="height:1px;background:#DBC9B4;line-height:1px;font-size:1px;">&nbsp;</div>
+    </td>
+  </tr>
+  ${eco}
+  ${disclaimer}
+</table>`.trim();
+}
+
+function updatePreview(){
+  $("preview").innerHTML = signatureHTML();
+}
+
+["name","title","phone","email","website","greeting","eco","disclaimer"].forEach(id=>{
+  $(id).addEventListener("input", updatePreview);
+  $(id).addEventListener("change", updatePreview);
+});
+
+function plainText(){
+  const lines = [
+    $("greeting").value.trim(),
+    "",
+    $("name").value.trim(),
+    `${$("title").value.trim()} | COLORA JEWELRY CO., LTD`,
+    `T · ${$("phone").value.trim()}`,
+    `E · ${$("email").value.trim()}`,
+    `W · ${cleanWebsite($("website").value.trim())}`
+  ];
+  if($("eco").checked){
+    lines.push("", "Please consider your environmental responsibilities before printing emails and documents.");
+  }
+  if($("disclaimer").checked){
+    lines.push("", "(!) Disclaimer: This email and any attachments may contain confidential or privileged information and are intended solely for the named recipient(s). If you have received this email in error, please notify the sender and delete it.");
+  }
+  return lines.join("\n");
+}
+
+function setStatus(msg, error=false){
+  $("status").textContent = msg;
+  $("status").style.color = error ? "#8E2F2A" : "#0F6857";
+  clearTimeout(window.__statusTimer);
+  window.__statusTimer = setTimeout(()=> $("status").textContent="", 3500);
+}
+
+async function copyRich(){
+  const html = signatureHTML();
+  try{
+    if(navigator.clipboard && window.ClipboardItem){
+      const item = new ClipboardItem({
+        "text/html": new Blob([html], {type:"text/html"}),
+        "text/plain": new Blob([plainText()], {type:"text/plain"})
+      });
+      await navigator.clipboard.write([item]);
+      setStatus("Đã copy chữ ký. Bây giờ paste vào Apple Mail / Outlook.");
+      return;
+    }
+  }catch(e){}
+
+  const temp = document.createElement("div");
+  temp.contentEditable = "true";
+  temp.style.position = "fixed";
+  temp.style.left = "-99999px";
+  temp.innerHTML = html;
+  document.body.appendChild(temp);
+
+  const range = document.createRange();
+  range.selectNodeContents(temp);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  const ok = document.execCommand("copy");
+  sel.removeAllRanges();
+  temp.remove();
+  setStatus(ok ? "Đã copy chữ ký." : "Không thể copy tự động. Hãy chọn preview và copy thủ công.", !ok);
+}
+
+async function copyHtml(){
+  try{
+    await navigator.clipboard.writeText(signatureHTML());
+    setStatus("Đã copy mã HTML.");
+  }catch(e){
+    setStatus("Trình duyệt không cho phép copy HTML.", true);
+  }
+}
+
+function downloadHtml(){
+  const doc = `<!doctype html><html><head><meta charset="utf-8"><title>COLORA Email Signature</title></head><body>${signatureHTML()}</body></html>`;
+  const blob = new Blob([doc], {type:"text/html;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  const safe = $("name").value.trim().replace(/[^\w\-]+/g,"_") || "employee";
+  a.download = `COLORA_signature_${safe}.html`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setStatus("Đã tạo file HTML.");
+}
+
+function resetForm(){
+  Object.entries(defaults).forEach(([k,v])=>{
+    if(typeof v === "boolean") $(k).checked = v;
+    else $(k).value = v;
+  });
+  updatePreview();
+  setStatus("Đã khôi phục dữ liệu mẫu.");
+}
+
+$("copyRich").addEventListener("click", copyRich);
+$("copyHtml").addEventListener("click", copyHtml);
+$("downloadHtml").addEventListener("click", downloadHtml);
+$("reset").addEventListener("click", resetForm);
+
+updatePreview();
+</script>
+</body>
+</html>
