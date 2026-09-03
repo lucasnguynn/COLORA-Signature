@@ -256,9 +256,10 @@
 
       <div class="card preview-card">
         <h2 class="section-title">Preview</h2>
-        <!-- Apple Mail preview note -->
-        <div style="font-size:11px;line-height:1.5;color:#7b6d64;margin:-8px 0 12px;">
-          Apple Mail có thể hiện đường viền/con trỏ xanh khi chỉnh sửa chữ ký; đường này không được gửi đi.
+        <!-- IMPORTANT APPLE MAIL SETTING -->
+        <div style="font-size:11px;line-height:1.55;color:#8E2F2A;margin:-8px 0 12px;">
+          <strong>Apple Mail:</strong> nếu chữ ký bị biến thành Helvetica màu đen, vào
+          Mail → Settings → Signatures và bỏ chọn <em>Always match my default message font</em>.
         </div>
         <div class="preview-shell">
           <div class="email-canvas" id="preview"></div>
@@ -275,13 +276,14 @@
         <div class="help">
           <strong>Apple Mail:</strong> Mail → Settings → Signatures → chọn email COLORA → dấu “+” → paste.<br>
           <strong>Outlook:</strong> Settings → Signatures → New signature → paste.<br>
-          Nên dùng nút <strong>Copy Signature</strong>. V7 dùng HTML đơn giản dành riêng cho Apple Mail:
-          chiều rộng cố định 400px, divider bằng border 1px và ít nested table hơn. Đường xanh dọc xuất hiện khi edit
-          chỉ là UI của Apple Mail và không nằm trong email gửi đi.</div>
+          Nên dùng nút <strong>Copy Signature</strong>. V8 giữ nguyên visual hierarchy của bản đẹp,
+          nhưng dùng divider 1px và khung 390px để ổn định hơn khi hiển thị trong Apple Mail.
+          Nếu Apple Mail biến toàn bộ chữ ký thành Helvetica đen, hãy kiểm tra tùy chọn
+          <strong>Always match my default message font</strong> trong Mail → Settings → Signatures và tắt nó.</div>
       </div>
     </section>
 
-    <div class="footer">COLORA · Email signature standard · Apple Mail-safe V7</div>
+    <div class="footer">COLORA · Email signature standard · Refined V8</div>
   </main>
 
 <script>
@@ -320,14 +322,14 @@ function signatureHTML(){
 
   const eco = $("eco").checked ? `
     <tr>
-      <td style="padding:9px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:10px;line-height:14px;font-weight:600;color:#0F6857;">
+      <td style="padding:10px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:10px;line-height:1.45;font-weight:600;color:#0F6857;">
         Please consider your environmental responsibilities before printing emails and documents.
       </td>
     </tr>` : "";
 
   const disclaimer = $("disclaimer").checked ? `
     <tr>
-      <td style="padding:7px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:9px;line-height:13px;color:#4A2E23;">
+      <td style="padding:8px 0 0 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:9.5px;line-height:1.5;color:#4A2E23;">
         <span style="font-weight:700;color:#8E2F2A;">(!) Disclaimer:</span>
         <span style="font-style:italic;">
           This email and any attachments may contain confidential or privileged information and are intended solely for the named recipient(s).
@@ -338,56 +340,64 @@ function signatureHTML(){
     </tr>` : "";
 
   return `
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="400"
- style="border-collapse:collapse;width:400px;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;color:#002451;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="390"
+ style="border-collapse:collapse;width:390px;max-width:100%;margin:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;color:#002451;">
   <tr>
-    <td style="padding:0 0 7px 0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:14px;line-height:18px;font-style:italic;color:#002451;">
+    <td style="padding:0 0 7px 0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:14px;line-height:1.25;font-style:italic;color:#002451;">
       ${greeting}
     </td>
   </tr>
 
   <tr>
-    <td style="padding:0 0 10px 0;border-top:1px solid #B08A5B;width:42px;font-size:1px;line-height:1px;">
-      &nbsp;
+    <td style="padding:0 0 10px 0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="42" style="border-collapse:collapse;width:42px;">
+        <tr><td style="border-top:1px solid #B08A5B;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+      </table>
     </td>
   </tr>
 
   <tr>
-    <td style="padding:0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:17px;line-height:19px;font-weight:600;color:#002451;">
+    <td style="padding:0;font-family:Didot,'Bodoni 72','Times New Roman',serif;font-size:17px;line-height:1.16;font-weight:600;color:#002451;">
       ${name}
     </td>
   </tr>
 
   <tr>
-    <td style="padding:2px 0 9px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:12px;line-height:17px;color:#4A2E23;">
+    <td style="padding:2px 0 10px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:12px;line-height:1.4;color:#4A2E23;">
       ${title} <span style="color:#DBC9B4;">|</span> COLORA JEWELRY CO., LTD
     </td>
   </tr>
 
   <tr>
-    <td style="padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:17px;color:#002451;">
-      <span style="display:inline-block;width:22px;font-weight:700;color:#8E2F2A;">T</span>
-      <a href="${phoneHref(phone)}" style="color:#002451;text-decoration:none;">${phone}</a>
+    <td style="padding:0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;width:100%;">
+        <tr>
+          <td width="24" valign="top" style="width:24px;padding:0 0 3px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;font-weight:700;color:#8E2F2A;">T</td>
+          <td valign="top" style="padding:0 0 3px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;color:#002451;">
+            <a href="${phoneHref(phone)}" style="color:#002451;text-decoration:none;">${phone}</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="24" valign="top" style="width:24px;padding:0 0 3px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;font-weight:700;color:#8E2F2A;">E</td>
+          <td valign="top" style="padding:0 0 3px 0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;color:#002451;overflow-wrap:anywhere;">
+            <a href="mailto:${email}" style="color:#002451;text-decoration:none;">${email}</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="24" valign="top" style="width:24px;padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;font-weight:700;color:#8E2F2A;">W</td>
+          <td valign="top" style="padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:1.45;color:#002451;overflow-wrap:anywhere;">
+            <a href="https://${website}" style="color:#002451;text-decoration:none;">${website}</a>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 
   <tr>
-    <td style="padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:17px;color:#002451;">
-      <span style="display:inline-block;width:22px;font-weight:700;color:#8E2F2A;">E</span>
-      <a href="mailto:${email}" style="color:#002451;text-decoration:none;">${email}</a>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;font-size:11.5px;line-height:17px;color:#002451;">
-      <span style="display:inline-block;width:22px;font-weight:700;color:#8E2F2A;">W</span>
-      <a href="https://${website}" style="color:#002451;text-decoration:none;">${website}</a>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="padding:11px 0 0 0;border-bottom:1px solid #DBC9B4;font-size:1px;line-height:1px;">
-      &nbsp;
+    <td style="padding:11px 0 0 0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;width:100%;">
+        <tr><td style="border-top:1px solid #DBC9B4;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+      </table>
     </td>
   </tr>
 
@@ -440,7 +450,7 @@ async function copyRich(){
         "text/plain": new Blob([plainText()], {type:"text/plain"})
       });
       await navigator.clipboard.write([item]);
-      setStatus("Đã copy bản Apple Mail-safe. Paste trực tiếp vào Mail → Settings → Signatures.");
+      setStatus("Đã copy chữ ký. Bây giờ paste vào Apple Mail / Outlook.");
       return;
     }
   }catch(e){}
